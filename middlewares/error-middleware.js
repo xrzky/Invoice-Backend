@@ -1,9 +1,9 @@
 function errorMiddleware(error, req, res, next) {
-    let code = 500;
-    let message = 'Internal Server Error';
+    let code = 400;
+    let message = 'Bad Request';
 
     if (error.name === 'SequelizeUniqueConstraintError') {
-        res.status(400).json({ message: 'Bad Request' });
+        res.status(400).json({ message: 'Email already registered' });
     } else if (error.name === 'EmailNotFound' || error.name === 'WrongPassword') {
         res.status(401).json({ message: 'Email or Password is Wrong' });
     } else if (error.name === 'PageNotFound') {
