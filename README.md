@@ -1,10 +1,10 @@
 # Invoice Backend
 
 ## Invoice Backend
-adalah backend project untuk membuat REST-API yang berguna untuk membuat sebuah invoice dari pembelian product oleh user. Yang mana user dapat menambahkan invoice dari pembelian product, mengubah product berdasarkan invoice, melihat invoice dari semua transaksi pembelian dan menghapus invoice.
+is a backend project designed to create a REST API that facilitates the creation of invoices for product purchases by users. Users are able to add invoices for product purchases, modify products based on invoices, view invoices for all purchase transactions, and delete invoices.
 
 ### File ENV
-membuat file dengan nama '.env' diisi dengan melihat dari file '.env.example' untuk pengisi pada config.js
+Create a file named '.env' and fill it by referring to the contents of the '.env.example' file for configuration in database.js.
 
 # Endpoint Users
 
