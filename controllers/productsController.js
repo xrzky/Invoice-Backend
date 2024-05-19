@@ -60,7 +60,9 @@ class productsController {
         const { title, price } = req.body;
         const data = { title, price };
         try {
-            const products = await Product.update(data, { where: { id } });
+            const products = await Product.update(data, { where: { id }, returning: true });
+            if (products[0] === 0) throw ({ name: 'cantUpdateProduct' });
+            if (!products) throw ({ name: 'SequelizeValidationError'});
             res.status(200).json({
                 id: products[1][0].id,
                 title: products[1][0].title,
@@ -81,7 +83,6 @@ class productsController {
             res.status(200).json({ message: 'This products has been successfully deleted' })
         } catch (error) {
             next(error)
-            // res.status(500).json({ message: error });
         }
     }
 }

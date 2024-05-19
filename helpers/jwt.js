@@ -5,7 +5,7 @@ function sign(payload){
 }
 
 function verify(token){
-    return jwt.sign(token, process.env.JWT_SECRET);
+    return jwt.verify(token, process.env.JWT_SECRET);
 }
 
 module.exports = {

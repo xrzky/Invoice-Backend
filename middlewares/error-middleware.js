@@ -20,9 +20,24 @@ function errorMiddleware(error, req, res, next) {
     } else if (error.name === 'DataNotFound') {
         code = 404;
         message = 'Data Not Found';
+    } else if (error.name === 'ProductNotFound') {
+        code = 404;
+        message = 'Product Not Found';
+    } else if (error.name === 'InvoiceNotFound') {
+        code = 404;
+        message = 'Invoice Not Found';
     } else if (error.name === 'ErrNotFound') {
         code = 404;
         message = 'Cannot delete because data not found';
+    } else if (error.name === 'NoAuthorization' || error.name === 'Unauthorized') {
+        code = 401;
+        message = 'Unauthorized'
+    } else if (error.name === 'JsonWebTokenError' || error.name === 'InvalidToken') {
+        code = 401;
+        message = 'Invalid Token';
+    } else if (error.name === 'cantUpdateProduct') {
+        code = 404;
+        message = 'cannot update this Products because body data is undefined';
     }
     return res.status(code).json({ message });
 }
