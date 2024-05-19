@@ -44,3 +44,184 @@ Body
     "password": "string",
 }
 ```
+
+# Endpoint Product
+
+## Add Product
+
+POST
+
+```js
+localhost:3000/products
+```
+
+Body
+```json
+{
+    "title": "string",
+    "price": "integer"
+}
+```
+
+
+## Get All Product
+
+GET
+
+```js
+localhost:3000/products
+```
+
+## Get Product By Id
+
+GET
+
+```js
+localhost:3000/products/:id
+```
+
+Params
+```js
+id = 'integer'
+```
+
+## Update Product
+
+PUT or PATCH
+
+```js
+localhost:3000/products/:id
+```
+
+Params
+```js
+id = 'integer'
+```
+
+Body
+```json
+{
+    "title": "string",
+    "price": "integer"
+}
+```
+
+## Delete Product
+
+DELETE
+```js
+localhost:3000/products/:id
+```
+
+Params
+```js
+id = 'integer'
+```
+
+# Endpoint Transaction
+
+## Add Transaction
+
+POST
+```js
+localhost:3000/transactions
+```
+
+Authorization
+```js
+<token>
+```
+
+Body
+```json
+{
+    "items": [
+        {
+            "ProductId": "integer",
+            "quantity": "integer"
+        },
+        {
+            "ProductId": "integer",
+            "quantity": "integer"
+        }
+    ]
+}
+```
+
+## Get Transaction
+
+GET
+```js
+localhost:3000/transactions
+```
+
+Authorization
+```js
+<token>
+```
+
+## Get Transaction By Id
+
+GET
+```js
+localhost:3000/transactions/:id
+```
+Authorization
+```js
+<token>
+```
+
+Params
+```js
+id = 'integer'
+```
+
+## Update Transaction By Id
+
+PUT or PATCH
+```js
+localhost:3000/transactions/:id
+```
+
+Authorization
+```js
+<token>
+```
+
+Params
+```js
+id = "integer"
+```
+
+Body
+```json
+{
+    "items": [
+        {
+            "ProductId": "integer",
+            "quantity": "integer"
+        },
+        {
+            "ProductId": "integer",
+            "quantity": "integer"
+        }
+    ]
+}
+```
+
+## Delete Transaction
+
+DELETE
+```js
+localhost:3000/transactions/:id
+```
+
+Authorization
+```js
+<token>
+```
+
+Params
+```js
+id = "integer"
+```
