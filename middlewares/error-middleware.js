@@ -1,45 +1,72 @@
 function errorMiddleware(error, req, res, next) {
-    let code = 400;
-    let message = 'Bad Request';
+    const errorName = {
+        'SequelizeUniqueConstraintError': {
+            code: 400,
+            message: 'Email already registered'
+        },
+        'EmailNotFound': {
+            code: 401,
+            message: 'Email or Password is Wrong'
+        },
+        'WrongPassword': {
+            code: 401,
+            message: 'Email or Password is Wrong'
+        },
+        'PageNotFound': {
+            code: 404,
+            message: 'Oopss.. Nothing Here'
+        },
+        'DataNotFound': {
+            code: 404,
+            message: 'Data Not Found'
+        },
+        'ProductNotFound': {
+            code: 404,
+            message: 'Product Not Found'
+        },
+        'InvoiceNotFound': {
+            code: 404,
+            message: 'Invoice Not Found'
+        },
+        'ErrNotFound': {
+            code: 404,
+            message: 'Cannot delete because data not found'
+        },
+        'NoAuthorization': {
+            code: 401,
+            message: 'Unauthorized'
+        },
+        'Unauthorized': {
+            code: 401,
+            message: 'Unauthorized'
+        },
+        'JsonWebTokenError': {
+            code: 401,
+            message: 'Invalid Token'
+        },
+        'InvalidToken': {
+            code: 401,
+            message: 'Invalid Token'
+        },
+        'cantUpdateProduct': {
+            code: 404,
+            message: 'cannot update this Products because body data is undefined'
+        }
+    };
 
-    if (error.name === 'SequelizeUniqueConstraintError') {
-        code = 400;
-        message = 'Email already registered';
-    } else if (error.name === 'EmailNotFound' || error.name === 'WrongPassword') {
-        code = 401;
-        message = 'Email or Password is Wrong';
-    } else if (error.name === 'PageNotFound') {
-        code = 404;
-        message = 'Oopss.. Nothing Here';
-    } else if (error.name === 'SequelizeValidationError') {
+    if (error.name === 'SequelizeValidationError') {
         const validationErrors = error.errors.map((error) => {
             return error.message;
         })
-        code = 400;
-        message = validationErrors;
-    } else if (error.name === 'DataNotFound') {
-        code = 404;
-        message = 'Data Not Found';
-    } else if (error.name === 'ProductNotFound') {
-        code = 404;
-        message = 'Product Not Found';
-    } else if (error.name === 'InvoiceNotFound') {
-        code = 404;
-        message = 'Invoice Not Found';
-    } else if (error.name === 'ErrNotFound') {
-        code = 404;
-        message = 'Cannot delete because data not found';
-    } else if (error.name === 'NoAuthorization' || error.name === 'Unauthorized') {
-        code = 401;
-        message = 'Unauthorized'
-    } else if (error.name === 'JsonWebTokenError' || error.name === 'InvalidToken') {
-        code = 401;
-        message = 'Invalid Token';
-    } else if (error.name === 'cantUpdateProduct') {
-        code = 404;
-        message = 'cannot update this Products because body data is undefined';
+        return res.status(400).json({ message: validationErrors});
+    } else {
+        const errorResponse = errorName[error.name] || {
+            code: 400,
+            message: 'Bad Request'
+        }
+        return res.status(errorResponse.code).json({ message: errorResponse.message });
     }
-    return res.status(code).json({ message });
+
 }
 
 module.exports = errorMiddleware;

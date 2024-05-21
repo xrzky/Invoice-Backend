@@ -60,15 +60,16 @@ class productsController {
         const { title, price } = req.body;
         const data = { title, price };
         try {
-            const products = await Product.update(data, { where: { id }, returning: true });
-            if (products[0] === 0) throw ({ name: 'cantUpdateProduct' });
-            if (!products) throw ({ name: 'SequelizeValidationError'});
+            const [affectedRows, updatedProducts] = await Product.update(data, { where: { id }, returning: true });
+            const product = updatedProducts[0]
+            if (affectedRows === 0) throw ({ name: 'cantUpdateProduct' });
+            if (!product) throw ({ name: 'SequelizeValidationError'});
             res.status(200).json({
-                id: products[1][0].id,
-                title: products[1][0].title,
-                price: convert(products[1][0].price),
-                createdAt: products[1][0].createdAt,
-                updatedAt: products[1][0].updatedAt,
+                id: product.id,
+                title: product.title,
+                price: convert(product.price),
+                createdAt: product.createdAt,
+                updatedAt: product.updatedAt,
             })
         } catch (error) {
             next(error);
