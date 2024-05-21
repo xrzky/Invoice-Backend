@@ -3,17 +3,26 @@ function errorMiddleware(error, req, res, next) {
     let message = 'Bad Request';
 
     if (error.name === 'SequelizeUniqueConstraintError') {
-        res.status(400).json({ message: 'Email already registered' });
+        code = 400;
+        message = 'Email already registered';
     } else if (error.name === 'EmailNotFound' || error.name === 'WrongPassword') {
-        res.status(401).json({ message: 'Email or Password is Wrong' });
+        code = 401;
+        message = 'Email or Password is Wrong';
     } else if (error.name === 'PageNotFound') {
-        res.status(404).json({ message: 'Oopss... Nothing Here'});
+        code = 404;
+        message = 'Oopss.. Nothing Here';
     } else if (error.name === 'SequelizeValidationError') {
         const validationErrors = error.errors.map((error) => {
             return error.message;
         })
         code = 400;
         message = validationErrors;
+    } else if (error.name === 'DataNotFound') {
+        code = 404;
+        message = 'Data Not Found';
+    } else if (error.name === 'ErrNotFound') {
+        code = 404;
+        message = 'Cannot delete because data not found';
     }
     return res.status(code).json({ message });
 }
